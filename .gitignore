@@ -361,3 +361,15 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Data & DB
+data/
+*.db
+*.sqlite
+
+# Project files
+*.pyproj
