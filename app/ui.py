@@ -150,7 +150,7 @@ class MainWindow(QMainWindow):
             self.desc_input.clear()
             self.load_data()
         except EmptyTitleError as e:
-            # Отлавливаем наше исключение и показываем ошибку
+            # Отлавливаем исключение и показываем ошибку
             QMessageBox.warning(self, "Ошибка ввода", str(e))
         except Exception as e:
             QMessageBox.critical(self, "Ошибка", f"Неизвестная ошибка: {e}")

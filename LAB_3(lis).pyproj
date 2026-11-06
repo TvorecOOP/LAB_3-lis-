@@ -30,15 +30,25 @@
     <Compile Include="main.py" />
     <Compile Include="tests\test_app.py" />
     <Compile Include="tests\__init__.py" />
+    <Compile Include="web\app.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\" />
+    <Folder Include="bat\" />
     <Folder Include="tests\" />
-    <Folder Include="data\" />
+    <Folder Include="web\" />
+    <Folder Include="web\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bat\run_app.bat" />
+    <Content Include="bat\run_docker.bat" />
+    <Content Include="bat\run_tests.bat" />
+    <Content Include="bat\run_web.bat" />
+    <Content Include="docker-compose.yml" />
+    <Content Include="Dockerfile.web" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
+    <Content Include="web\templates\index.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>

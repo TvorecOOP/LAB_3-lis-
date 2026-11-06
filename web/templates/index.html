@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>ToDo Менеджер - Веб-версия</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #1e1e1e; color: #e0e0e0; margin: 0; padding: 20px; }
+        .container { max-width: 1100px; margin: auto; background: #2b2b2b; padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        h1 { text-align: center; color: #4db8ff; margin-bottom: 30px; }
+        .top-bar { display: flex; gap: 10px; margin-bottom: 20px; }
+        input[type="text"] { flex: 1; padding: 10px; background: #383838; border: 1px solid #555; color: white; border-radius: 4px; }
+        input[type="text"]:focus { outline: none; border-color: #4db8ff; }
+        .btn { padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; border-radius: 4px; font-weight: bold; }
+        .btn:hover { background: #218838; }
+        .btn-delete { background: #dc3545; padding: 6px 12px; font-size: 12px; text-decoration: none; color: white; border-radius: 4px; display: inline-block; }
+        .btn-delete:hover { background: #c82333; }
+        .main-content { display: flex; gap: 20px; align-items: flex-start; }
+        .table-wrapper { flex: 3; overflow-y: auto; max-height: 500px; }
+        .graph-wrapper { flex: 2; background: #2b2b2b; padding: 10px; border-radius: 8px; text-align: center; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; border-bottom: 1px solid #444; text-align: left; vertical-align: middle; }
+        th { background: #383838; color: #4db8ff; }
+        tr:hover { background: #333; }
+        .status-form { display: flex; gap: 5px; align-items: center; }
+        select { padding: 6px; background: #383838; color: white; border: 1px solid #555; border-radius: 4px; }
+        .btn-update { background: #007bff; padding: 6px 10px; font-size: 12px; }
+        .btn-update:hover { background: #0069d9; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Система учета задач</h1>
+        <form action="/add" method="post" class="top-bar">
+            <input type="text" name="title" placeholder="Название задачи..." required>
+            <input type="text" name="description" placeholder="Описание...">
+            <button type="submit" class="btn">Добавить задачу</button>
+        </form>
+        <div class="main-content">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Задача</th><th>Статус</th><th>Действия</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for task in tasks %}
+                        <tr>
+                            <td>{{ task.id }}</td>
+                            <td><b>{{ task.title }}</b><br><small style="color:#999">{{ task.description }}</small></td>
+                            <td>
+                                <form action="/update_status/{{ task.id }}" method="post" class="status-form">
+                                    <select name="status">
+                                        <option value="Новая" {% if task.status == 'Новая' %}selected{% endif %}>Новая</option>
+                                        <option value="В процессе" {% if task.status == 'В процессе' %}selected{% endif %}>В процессе</option>
+                                        <option value="Выполнена" {% if task.status == 'Выполнена' %}selected{% endif %}>Выполнена</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-update">ОК</button>
+                                </form>
+                            </td>
+                            <td><a href="/delete/{{ task.id }}" class="btn-delete">Удалить</a></td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="4" style="text-align: center;">Задач пока нет</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="graph-wrapper">
+                <h3 style="margin-top: 0;">График активности</h3>
+                {% if graph %}
+                    <img src="data:image/png;base64,{{ graph }}" alt="График активности" style="max-width: 100%;">
+                {% else %}
+                    <p style="color: #888;">Нет данных для графика</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
